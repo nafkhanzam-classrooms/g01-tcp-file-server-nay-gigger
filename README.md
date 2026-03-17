@@ -4,8 +4,8 @@
 ## Anggota Kelompok
 | Nama           | NRP        | Kelas     |
 | ---            | ---        | ----------|
-|                |            |           |
-|                |            |           |
+| Muhammad Quthbi Danish Abqori | 5025241036 | C          |
+| Zaky Gay               |   5025241XXX         | C          |
 
 ## Link Youtube (Unlisted)
 Link ditaruh di bawah ini
