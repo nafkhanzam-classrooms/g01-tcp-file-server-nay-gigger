@@ -8,7 +8,7 @@ def main():
     server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server_sock.bind(ADDR)
     server_sock.listen(5)
-    print(f"Server started on {ADDR}")
+    print(f"Synchronous server started on {ADDR}")
     print("This server handles one client at a time sequentially.")
 
     while True:
