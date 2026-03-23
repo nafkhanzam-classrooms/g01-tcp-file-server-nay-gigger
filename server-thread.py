@@ -41,7 +41,7 @@ def main():
     while True:
         try:
             client_sock, addr = server_sock.accept()
-            threading.Thread(target=client_thread, arg=(client_sock, addr), daemon=True).start()
+            threading.Thread(target=client_thread, args=(client_sock, addr), daemon=True).start()
         except KeyboardInterrupt:
             print("\nExiting server.")
             break
