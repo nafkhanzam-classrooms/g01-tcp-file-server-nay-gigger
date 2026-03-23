@@ -71,7 +71,7 @@ def handle_client_message(sock, msg, clients_list):
                     break
                 f.write(chunk)
                 size -= len(chunk)
-        bmsg = {"type": "upload", "filename": filename, "size": msg.get("size")}
+        bmsg = {"type": "broadcast", "msg": f"File '{filename}' ({msg.get('size')} bytes) uploaded by {sock.getpeername()}"}
         for c in clients_list:
             if c != sock:
                 try:
