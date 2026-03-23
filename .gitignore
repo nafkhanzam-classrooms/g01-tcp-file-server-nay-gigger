@@ -1,0 +1,4 @@
+__pycache__/
+client_files/
+server_files/
+*.pyc
