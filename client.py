@@ -13,7 +13,7 @@ def recv_loop(sock):
 
             msg_type = msg.get("type")
             if msg_type == "broadcast":
-                print(f"\n[BROADCAST] {msg.get('msg')}")
+                print(f"\n{msg.get('msg')}")
                 print("> ", end="", flush=True)
             
             elif msg_type == "list":
