@@ -1,4 +1,3 @@
-import chunk
 import socket
 import os
 from utils import *
