@@ -73,7 +73,6 @@ class TCPFileServer:
         filepath = self.server_dir / filename
         peer_str = f"{addr[0]}:{addr[1]}"
 
-        print(f"Receiving upload: '{filename}' ({original_size} bytes) from {peer_str}")
         self.uploading.add(sock)
         try:
             with open(filepath, "wb") as f:
@@ -87,7 +86,6 @@ class TCPFileServer:
         finally:
             self.uploading.discard(sock)
 
-        print(f"Upload complete: '{filename}' from {peer_str}")
         self._broadcast(sock, clients_list, {
             "type": "broadcast",
             "msg": f"File '{filename}' ({original_size} bytes) uploaded by {peer_str}",
@@ -104,7 +102,6 @@ class TCPFileServer:
         state.ul_original_size = original_size
         state.ul_filename = filename
         self.uploading.add(sock)
-        print(f"Receiving upload: '{filename}' ({original_size} bytes)")
 
     def upload_chunk(self, sock, state, clients_list):
         chunk = sock.recv(min(4096, state.ul_remaining))
@@ -128,7 +125,6 @@ class TCPFileServer:
         except Exception:
             peer_str = "Unknown"
 
-        print(f"Upload complete: '{state.ul_filename}' from {peer_str}")
         self._broadcast(sock, clients_list, {
             "type": "broadcast",
             "msg": f"File '{state.ul_filename}' ({state.ul_original_size} bytes) uploaded by {peer_str}",
