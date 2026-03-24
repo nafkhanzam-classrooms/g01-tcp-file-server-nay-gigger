@@ -1,6 +1,18 @@
 import socket
 import threading
+import readline
+import sys
 from utils import *
+
+def safe_print(content):
+    current_input = readline.get_line_buffer()
+
+    sys.stdout.write(f"\r\033[K{content}\n")
+    
+    sys.stdout.write(f"> {current_input}")
+    sys.stdout.flush()
+    
+    readline.redisplay()
 
 def recv_loop(sock, server):
     while True:
@@ -12,23 +24,18 @@ def recv_loop(sock, server):
 
             msg_type = msg.get("type")
             if msg_type == "broadcast":
-                print(f"\n{msg.get('msg')}")
-                print("> ", end="", flush=True)
-            
+                safe_print(msg.get("msg"));
             elif msg_type == "list":
                 files = msg.get("files", [])
-                print("\nFiles on server:")
-                for f in files:
-                    print(f"  - {f}")
-                print("> ", end="", flush=True)
-            
+                output = "Files on server:\n" + "\n".join([f"  - {f}" for f in files])
+                safe_print(output)
             elif msg_type == "download":
                 filename = msg.get("filename")
                 size = msg.get("size")
                 if size is None:
-                    print(f"\nError: {msg.get('error')}")
+                    safe_print(f"Error: {msg.get('error')}")
                 else:
-                    print(f"\nDownloading '{filename}' ({size} bytes)...")
+                    safe_print(f"Downloading '{filename}'...")
                     with open(server.client_dir / filename, "wb") as f:
                         while size > 0:
                             chunk = sock.recv(min(4096, size))
@@ -36,19 +43,14 @@ def recv_loop(sock, server):
                                 break
                             f.write(chunk)
                             size -= len(chunk)
-                    print(f"\nDownloaded '{filename}' ({msg.get('size')} bytes) successfully to {server.client_dir}/.")
-                print("> ", end="", flush=True)
-            
+                    safe_print(f"Downloaded '{filename}' ({msg.get('size')} bytes) successfully to {server.client_dir}/.")
             elif msg_type == "error":
-                print(f"\nError: {msg.get('error')}")
-                print("> ", end="", flush=True)
-            
+                safe_print(f"Error: {msg.get('error')}")            
             else:
-                print(f"\nUnknown message type: {msg_type}")
-                print("> ", end="", flush=True)
+                safe_print(f"\nUnknown message type: {msg_type}")
         
         except Exception as e:
-            print(f"\nError: {e}")
+            safe_print(f"Receiver Error: {e}")
             break
 
 
@@ -74,7 +76,7 @@ def main():
     while True:
         try:
             cmd_line = input("> ")
-            if not cmd_line:
+            if not cmd_line.strip():
                 continue
             
             if cmd_line.startswith("/quit"):
