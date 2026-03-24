@@ -101,6 +101,7 @@ def main():
                     while chunk := f.read(4096):
                         sock.sendall(chunk)
                 print(f"Uploaded '{filepath.name}' ({size} bytes)")
+            
             elif cmd_line.startswith("/download"):
                 parts = cmd_line.split(" ", 1)
                 if len(parts) < 2:
@@ -108,6 +109,10 @@ def main():
                     continue
                 filename = parts[1].strip()
                 server.send_message(sock, {"type": "command", "cmd": "download", "filename": filename})
+            
+            elif cmd_line.startswith("/"):
+                server.send_message(sock, {"type": "command", "cmd": ""})
+            
             else:
                 server.send_message(sock, {"type": "broadcast", "msg": cmd_line})
         
