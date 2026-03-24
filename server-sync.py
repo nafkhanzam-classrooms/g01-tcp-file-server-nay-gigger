@@ -1,14 +1,13 @@
 import socket
-import os
 from utils import *
 
 def main():
-    init_server()
+    server = TCPFileServer()
     server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_sock.bind(ADDR)
+    server_sock.bind(server.addr)
     server_sock.listen(5)
-    print(f"Synchronous server started on {ADDR}")
+    print(f"Synchronous server started on {server.addr}")
     print("This server handles one client at a time sequentially.")
 
     while True:
@@ -18,10 +17,10 @@ def main():
             clients = [client_sock]
 
             while True:
-                msg = recv_message(client_sock)
+                msg = server.recv_message(client_sock)
                 if not msg:
                     break
-                handle_client_message(client_sock, msg, clients)
+                server.handle_client_message(client_sock, msg, clients)
         except Exception as e:
             print(f"Error: {e}")
         finally:
