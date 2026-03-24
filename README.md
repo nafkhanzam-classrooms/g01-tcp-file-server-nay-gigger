@@ -2,10 +2,10 @@
 # Network Programming - Assignment G01
 
 ## Anggota Kelompok
-| Nama           | NRP        | Kelas     |
-| ---            | ---        | ----------|
-| Muhammad Quthbi Danish Abqori | 5025241036 | C          |
-| Zaky Gay               |   5025241XXX         | C          |
+| Nama                          | NRP        | Kelas |
+| ---                           | ---        | ---   |
+| Muhammad Quthbi Danish Abqori | 5025241036 | C     |
+| Muhammad Zaky Zein            | 5025241148 | C     |
 
 ## Link Youtube (Unlisted)
 Link ditaruh di bawah ini
